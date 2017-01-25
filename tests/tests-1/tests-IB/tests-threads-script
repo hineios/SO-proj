@@ -1,0 +1,14 @@
+echo "Testes focados na parte I-B.
+Se testes falharem, repetir se necessário. Em ultimo caso, o DUMP tem que ser consistente"
+echo "TESTE 1 - testa a correcção do estado de um conjunto de tarefas"
+./sched_dumptest
+echo "TESTE 3 - testa MUTEX"
+./test-ReadWrite
+echo "TESTE 4 - testa sincronização de tarefas"
+./test-time-slice
+echo "TESTE 5 - testa o nice"
+./sched_th_nice
+echo "TESTE 7 - testa CFQ, 3 tarefas do mesmo cliente, 2 com prio 1 e 1 com prio 10. Para passar TESTE 1 com SUCESSO, counter para tarefas de prio 1 deve ser semelhante, e counter da outra tarefa bastante inferior"
+./sched_1cl3ths
+echo "TESTE 8 - testa CFQ, 6 tarefas de diversos clientes e prioridades" 
+./sched_3cl_6th

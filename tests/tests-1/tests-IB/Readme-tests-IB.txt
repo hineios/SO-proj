@@ -1,0 +1,71 @@
+Os testes I-B incluem os testes parte IB do projecto.
+
+Pode executar cada um dos testes descritos a seguir individualmente, ou executar 
+./tests-threads-script 
+que corre todos os testes executando estes os programas.
+Para estes testes não deverá usar pthreads.
+
+===============================================================================================
+
+Descrição dos testes em tests-threads-script
+Testes focados na parte IB do projecto.
+
+---------
+
+TESTE 1 - testa a correcção do estado de um conjunto de tarefas
+./sched_dumptest
+
+O teste indica quais são as condições de sucesso, nomeadamente o dump da tarefa deve indicar
+1 active thread with priority 1
+3 executable threads with prioritis 2, 5, 10
+
+----------
+
+TESTE 3 - testa sincronização MUTEX
+./test-ReadWrite
+
+O programa de teste indica se o teste passou, ou não (PASSED / NOT PASSED)
+
+-----------
+
+TESTE 4 - testa sincronização de tarefas
+./test-time-slice
+
+O programa de teste indica se o teste passou, ou não (PASSED / NOT PASSED)
+
+-------------
+
+echo "TESTE 5 - testa o nice
+./sched_th_nice
+
+Existem duas maneiras de verificar o sucesso deste teste.
+A primeira apenas pode ser utilizada se a função int sthread_nice(int nice) estiver declarada 
+no sthreads.h, e implementada, e retornar o valor de prioridade + nice. Obtém-se sucesso se:
+prio0: 6
+prio1: 6
+prio2: 7
+prio3: 10
+A segunda alternativa para verificar sucesso consiste em analisar o DUMP. As 4 tarefas do dump 
+deverão ter prioridades 6, 6, 7 e 10 para sucesso.
+Se uma destas alternativas tiver sucesso, o teste passa.
+
+-------------
+
+
+TESTE 7 - testa CFQ, 3 tarefas do mesmo cliente, 2 com prio 1 e 1 com prio 10. 
+./sched_1cl3ths
+
+Para passar TESTE 1 com SUCESSO, counter para tarefas de prio 1 deve ser semelhante, 
+e counter da outra tarefa bastante inferior"
+Exemplo de sucesso:
+thread 1: prio is 10, counter is 20 
+thread 2: prio is 1, counter is 100
+thread 3: prio is 1, counter is 100
+
+--------------
+
+TESTE 8 - testa CFQ, 6 tarefas de diversos clientes e prioridades
+./sched_3cl_6th
+
+Para passar teste, os racios deverão estar entre 0.5 e 1.6
+O teste indica no resultado se passou ou não (PASSED / NOT PASSED)

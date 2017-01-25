@@ -1,0 +1,41 @@
+echo "Testes focados na parte I-A, para 3 registos e cada array de blocos com 12 blocos"
+echo "TESTE 1 - duas escritas por uma tarefa no registo 0"
+./test-logrw-ops_on_registers w = 1 1 2
+echo "Para passar teste 1 com SUCESSO, o resultado deverá ser 
+Array:0 NextWrBlk:005 ThreadsWaiting:000
+REG_IDX: [00]=004 [01]=001 [02]=002 
+00:01:00:00:00:00:00:00:	........
+<registo não escrito, qualquer conteúdo inicial é correcto>
+<registo não escrito, qualquer conteúdo inicial é correcto>"
+echo "TESTE 2 - leituras do mesmo registo -0- com 4 tarefas, 1 seg cada leitura"
+./test-logrw-ops_on_registers r = 100000 4
+echo "para passar teste 2 com SUCESSO, o tempo total e por tarefa deverá ser por volta dos 12 segs"
+echo "TESTE 3 - escritas do mesmo registo -0- com 4 tarefas, 1 seg cada escrita"
+./test-logrw-ops_on_registers w = 100000 4
+echo "Para passar teste 3 com SUCESSO, o tempo total e por tarefa deverá ser por volta dos 12-15 segs"
+echo "TESTE 4"
+./test-logrw-wclean 0 1 0 12
+echo "Para passar teste 4 com SUCESSO, o resultado deverá ser
+NextWrBlk:numa posição de 1 a 12
+REG_IDX: [0i], i=1..12 , i é a i-ésima posição no array activo (a 1ª corresponde ao 1ª elemento do array)
+00:0B:00:00:00:00:00:00: ........
+01:0B:00:00:00:00:00:00: ........
+02:0B:00:00:00:00:00:00: ........"
+echo "TESTE 5"
+./test-logrw-wclean 1 1 10000 4
+echo "Para passar teste 5 com SUCESSO, os dumps durante o cleaning devem estar consistentes
+Array activo :1
+NextWrBlk: uma posição entre a 4ª e a 7ª do array1.
+REG_IDX: [0i], i=1..6 , é uma das 6 primeiras posições do 2ªarray (podem estar trocados).
+00:03:00:00:00:00:00:00: ........
+01:03:00:00:00:00:00:00: ........
+02:03:00:00:00:00:00:00: ........"
+echo "TESTE 6"
+./test-logrw-wclean 1 4 10000 2
+echo "Para passar teste 6 com SUCESSO, o resultado deverá ser
+Array activo :0
+NextWrBlk: uma posição entre a 4ª e a 10ª do array0.
+REG_IDX: [0i], i=1..9 , ou seja, numa das 9 primeiras posições do array 1
+00:01:00:00:00:00:00:00: ........
+01:01:00:00:00:00:00:00: ........
+02:01:00:00:00:00:00:00: ........"

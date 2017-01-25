@@ -1,0 +1,37 @@
+LIBRARIES = liblogrw.a
+
+OBJECTS = block.o io_delay.o logrw.o
+
+DEFAULT_INCLUDES = -I. -I. -I../include
+CCASCOMPILE = $(CCAS) $(CCASFLAGS)
+COMPILE = $(CC) $(DEFS) $(DEFAULT_INCLUDES) $(INCLUDES) $(CFLAGS)
+AR = ar
+CC = gcc
+CCAS = gcc
+CCASFLAGS = -g -O0 -Wall -I ../include -D__ASM__
+CFLAGS ?= -g -O0 -Wall 
+ARFLAGS = cru
+
+#DEFS ?= -m32 -DHAVE_CONFIG_H -DSIMULATE_IO_DELAY -DSLEEP_ON -DNOT_FS_INITIALIZER
+DEFS ?= -m32 -DUSE_LOG_SOFS -DSLEEP_ON -DHAVE_CONFIG_H -DUSE_PTHREADS -DSIMULATE_IO_DELAY -DNOT_FS_INITIALIZER 
+#DEFS ?= -m32 -DSLEEP_ON -DHAVE_CONFIG_H -DUSE_PTHREADS -DSIMULATE_IO_DELAY -DNOT_FS_INITIALIZER 
+
+RANLIB = ranlib
+INCLUDES = -I ../include
+
+all: $(LIBRARIES)
+
+liblogrw.a: $(OBJECTS) 
+	$(AR) $(ARFLAGS) $@ $^
+	$(RANLIB) $@
+
+.S.o:
+	$(CCASCOMPILE)  -c $<
+
+.c.o:
+	$(COMPILE) -c -o $@ $<
+
+clean: 
+	rm -f *.o
+	rm -f *.a
+

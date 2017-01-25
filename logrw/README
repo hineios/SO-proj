@@ -1,0 +1,15 @@
+logrw: The log reads/writes package.
+
+This directory implements a library for reading and writing from/to a 
+buffer using a log structure. It supports using
+a native (OS-provided) pthreads implementation as well as user-level
+thread package (the later to be implemented by the student).
+
+The public API is described in ../include/logrw.h. 
+logrw.c (to be implemented by the student) implements this API.
+block.c implements a storage layer which offers the abstraction 
+of a sequence of blocks of fixed size. Blocks are kept in memory.
+Contains functions for creating, destroying, writing, reading and 
+dumping blocks, among other. 
+io_delay.c implements a delay (can be used for reading or writing 
+delays) by puting a thread to sleep for a specified duration.
